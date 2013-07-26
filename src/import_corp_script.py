@@ -6,6 +6,7 @@ import settings
 
 
 DB = Connection('localhost', 'purgeboard', user=settings.PSQL_USER, password=settings.PSQL_PASSWORD)
+CORP_FW_STATS_URL='https://api.eveonline.com/corp/FacWarStats.xml.aspx'
 
 def create_tables():
     query = """
@@ -20,7 +21,7 @@ def create_tables():
         victoryPointsToday int,
         victoryPointsTotal int,
         date varchar(8),
-        PRIMARY KEY date
+        PRIMARY KEY (date)
     )
     """
     DB.execute(query)
@@ -33,7 +34,7 @@ def yesterday_string():
 
 def main():
     create_tables()
-    stats = requests.post(FW_STATS_URL, data={'keyID': settings.CROSSFIRE_KEYID,
+    stats = requests.post(CORP_FW_STATS_URL, data={'keyID': settings.CROSSFIRE_KEYID,
                                             'vCode': settings.CROSSFIRE_VCODE}).content
     root = ET.fromstring(stats)
     for child in root:
@@ -54,11 +55,11 @@ def main():
             shit['enlisted'] = kid.text
         elif kid.tag == 'pilots':
             shit['pilots'] = kid.text
-        elif kid.tag == 'killsToday':
+        elif kid.tag == 'killsYesterday':
             shit['killsToday'] = kid.text
         elif kid.tag == 'killsTotal':
             shit['killsTotal'] = kid.text
-        elif kid.tag == 'victoryPointsToday':
+        elif kid.tag == 'victoryPointsYesterday':
             shit['victoryPointsToday'] = kid.text
         elif kid.tag == 'victoryPointsTotal':
             shit['victoryPointsTotal'] = kid.text
@@ -89,8 +90,9 @@ def main():
                                                     killsToday,
                                                     killsTotal,
                                                     victoryPointsToday,
-                                                    victoryPointsTotal) VALUES
-                                                    (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                                                    victoryPointsTotal,
+                                                    date) VALUES
+                                                    (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                                                     (shit['factionID'],
                                                     shit['factionName'],
                                                     shit['enlisted'],
@@ -98,6 +100,7 @@ def main():
                                                     shit['killsToday'],
                                                     shit['killsTotal'],
                                                     shit['victoryPointsToday'],
-                                                    shit['victoryPointsTotal']))
+                                                    shit['victoryPointsTotal'],
+                                                    date))
 if __name__ == "__main__":
     main()

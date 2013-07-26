@@ -30,6 +30,12 @@ class VictoryPointsTotal(BaseHandler):
     def get(self, _type):
         raise web.HTTPError(405, "Method not implemented")
 
+class CorpStats(BaseHandler):
+    def get(self, corp, date):
+        resp = self.db.query("""SELECT * FROM {corp}_fw_stats where date=%s""".format(corp=corp), (date))
+        self.write(json.dumps(resp))
+
+
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.INFO)
     db = Connection('localhost', 'purgeboard', user=settings.PSQL_USER, password=settings.PSQL_PASSWORD)
@@ -40,6 +46,7 @@ if __name__ == "__main__":
             (r"/(?P<_type>char|corp|faction)/kills/total/?", KillsTotal, {"db": db}),
             (r"/(?P<_type>char|corp|faction)/victory/day/(?P<day>[0-9]{8})/?", VictoryPointsByDay, {"db": db}),
             (r"/(?P<_type>char|corp|faction)/victory/total/?", VictoryPointsTotal, {"db": db}),
+            (r"/(?P<corp>[A-Za-z0-9 .-]+)/(?P<date>[0-9]{8})/?", CorpStats, {"db": db}),
             ]
     application = web.Application(routes)
     application.listen(settings.LISTEN_PORT)
