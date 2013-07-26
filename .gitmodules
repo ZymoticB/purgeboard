@@ -1,0 +1,3 @@
+[submodule "src/tornpsql"]
+	path = src/tornpsql
+	url = https://github.com/stevepeak/tornpsql.git
