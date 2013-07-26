@@ -1,0 +1,2 @@
+30 10 * * * <relpath>/purgeboard/bin/python <relpath>/purgeboard/src/import_cron_script.py
+

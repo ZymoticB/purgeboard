@@ -1,0 +1,3 @@
+PSQL_USER='purgeboard'
+PSQL_PASSWORD='temppass'
+LISTEN_PORT=6900
