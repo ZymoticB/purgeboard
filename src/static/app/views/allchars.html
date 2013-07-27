@@ -1,5 +1,14 @@
 <div class="container">
-	<ul ng-repeat="char in total">
-		<li><p>ID: {{char.characterid}}</p><p>Name: {{char.charactername}}</p><p>Kills: {{char.kills}}</p>
+	<input ng-model="yesterday" type="text" ng-change="update_stats()">
+	<ul>
+		<li ng-repeat="char in current_day_stats">
+			<p>ID: {{char.characterid}}</p><p>Name: {{char.charactername}}</p><p>Kills: {{char.kills}}</p>
+		</li>
+	</ul>
+	<br\>
+	<ul>
+		<li ng-repeat="char in total">
+			<p>ID: {{char.characterid}}</p><p>Name: {{char.charactername}}</p><p>Kills: {{char.kills}}</p>
+		</li>
 	</ul>
 </div>

@@ -13,8 +13,11 @@ purgeboard.controller('AllCorpsHandler',
 		var today = new Date();
 		var year = today.getUTCFullYear();
 		var month = today.getUTCMonth() + 1; //why the fuck would you return 0-11 ...
-		var day = today.getUTCDate();
-		var yesterday = year+month.pad(2)+day.pad(2);
-		$scope.yesterday = AllCorpsDaily.query({day: yesterday});
+		var day = today.getUTCDate() - 1;
+		$scope.yesterday = year+month.pad(2)+day.pad(2);
+		$scope.current_day_stats = AllCorpsDaily.query({day: $scope.yesterday});
+		$scope.update_stats = function(){
+			$scope.current_day_stats = AllCorpsDaily.query({day: $scope.yesterday});
+		};
 	}
 );

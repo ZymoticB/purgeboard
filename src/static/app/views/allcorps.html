@@ -1,5 +1,14 @@
 <div class="container">
-	<ul ng-repeat="corp in total">
-		<li><p>ID: {{corp.corporationid}}</p><p>Name: {{corp.corporationname}}</p><p>Kills: {{corp.kills}}</p>
+	<input ng-model="yesterday" type="text" ng-change="update_stats()">
+	<ul>
+		<li ng-repeat="corp in current_day_stats">
+			<p>ID: {{corp.corporationid}}</p><p>Name: {{corp.corporationname}}</p><p>Kills: {{corp.kills}}</p>
+		</li>
+	</ul>
+	<br\>
+	<ul>
+		<li ng-repeat="corp in total">
+			<p>ID: {{corp.corporationid}}</p><p>Name: {{corp.corporationname}}</p><p>Kills: {{corp.kills}}</p>
+		</li>
 	</ul>
 </div>
