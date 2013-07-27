@@ -1,3 +1,3 @@
-0 13 * * * <relpath>/purgeboard/bin/python <relpath>/purgeboard/src/import_cron_script.py
-10 13 * * * <relpath>/purgeboard/bin/python <relpath>/purgeboard/src/import_corp_script.py
+0 13 * * * <relpath>/purgeboard/bin/python <relpath>/purgeboard/src/import_cron_script.py > /dev/null 2>&1
+10 13 * * * <relpath>/purgeboard/bin/python <relpath>/purgeboard/src/import_corp_script.py > /dev/null 2>&1
 
