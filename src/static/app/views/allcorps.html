@@ -1,14 +1,35 @@
 <div class="container">
-	<input ng-model="yesterday" type="text" ng-change="update_stats()">
-	<ul>
-		<li ng-repeat="corp in current_day_stats">
-			<p>ID: {{corp.corporationid}}</p><p>Name: {{corp.corporationname}}</p><p>Kills: {{corp.kills}}</p>
-		</li>
-	</ul>
-	<br\>
-	<ul>
-		<li ng-repeat="corp in total">
-			<p>ID: {{corp.corporationid}}</p><p>Name: {{corp.corporationname}}</p><p>Kills: {{corp.kills}}</p>
-		</li>
-	</ul>
+	<tabs>
+		<pane title="Daily">
+			<input ng-model="stats.yesterday" type="text" ng-change="update_stats()">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Kills</th>
+					<tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="corp in stats.current_day_stats">
+					<td class="name">{{corp.corporationname}}</td>
+					<td class="kills">{{corp.kills}}</td>
+				</tr>
+			</table>
+		</pane>
+		<pane title="Total">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Kills</th>
+					<tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="corp in total">
+					<td class="name">{{corp.corporationname}}</td>
+					<td class="kills">{{corp.kills}}</td>
+				</tr>
+			</table>
+		</pane>
+	</tabs>
 </div>
