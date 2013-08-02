@@ -11,9 +11,10 @@ purgeboard.controller('AllFactionsHandler',
 	function AllFactionsHandler($scope, AllFactionsDaily, AllFactionsTotal){
 		$scope.total = AllFactionsTotal.query();
 		var today = new Date();
+		today.setDate(today.getDate() - 1); //UTC will bump this up a day in most TZs and data doesn't come until 11:00UTC the day after
 		var year = today.getUTCFullYear();
 		var month = today.getUTCMonth() + 1; //why the fuck would you return 0-11 ...
-		var day = today.getUTCDate() - 2; //UTC will bump this up a day in most TZs and data doesn't come until 11:00UTC the day after
+		var day = today.getUTCDate(); 
 		var yesterday = year+month.pad(2)+day.pad(2);
 		$scope.stats = {yesterday: yesterday};
 		var current_day_stats = AllFactionsDaily.query({day: $scope.stats.yesterday});
